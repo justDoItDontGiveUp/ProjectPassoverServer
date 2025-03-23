@@ -3,5 +3,5 @@ CREATE TABLE photos (
     albumId INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     url VARCHAR(2083) NOT NULL,
-    thumbnailUrl VARCHAR(2083) NOT NULL
+
 );

@@ -67,32 +67,68 @@ async function initializeDB() {
   (15, 8, "Chelsey Dietrich", "Lucio_Hettinger@annie.ca", "This post was a great introduction to the topic. I learned a lot!"),
   (16, 8, "Leanne Graham", "Sincere@april.biz", "I think you could dive deeper into some of the issues raised in this post.");
   `;
+
+  const insertTodo = `
+  INSERT INTO todo (id, userId, title, completed) VALUES
   
-
-
-  const insertApartments = `INSERT INTO apartments (apart_name) VALUES
-('דירה 1'),
-('דירה 2'),
-('דירה 3'),
-('דירה 4'),
-('דירה 5'),
-('דירה 6'),
-('דירה 7'),
-('דירה 8'),
-('דירה 9'),
-('דירה 10'),
-('דירת לב'),
-('חבצלת'),
-('מרכז עילית'),
-('חדשים 1'),
-('חדשים 2'),
-('וילה'),
-('404'),
-('מדשאה'),
-('לא ידוע');
-`;
-
- 
+  (1, 1, 'Finish homework', false),
+  (2, 1, 'Go for a run', true),
+  (3, 1, 'Read a book', false),
+  
+  (4, 2, 'Buy groceries', true),
+  (5, 2, 'Clean the house', false),
+  (6, 2, 'Pay bills', true),
+  
+  (7, 3, 'Write an article', true),
+  (8, 3, 'Call mom', false),
+  (9, 3, 'Take a walk', true),
+  
+  (10, 4, 'Prepare a presentation', false),
+  (11, 4, 'Attend meeting', true),
+  (12, 4, 'Update website', false),
+  
+  (13, 5, 'Complete project', true),
+  (14, 5, 'Go to the gym', false),
+  (15, 5, 'Check emails', true);
+  `;
+  
+  const insertAlbums = `
+  INSERT INTO albums (id, userId, title) VALUES
+  
+  (1, 1, 'Summer Vibes'),
+  (2, 1, 'Weekend Fun'),
+  
+  (3, 2, 'City Life'),
+  (4, 2, 'Family Moments'),
+  
+  (5, 3, 'Vacation Time'),
+  (6, 3, 'Night Out'),
+  
+  (7, 4, 'Adventure Awaits'),
+  (8, 4, 'Chill Moments'),
+  
+  (9, 5, 'Foodie Diaries'),
+  (10, 5, 'Friends Forever');
+  `;
+  
+  const insertPhotos = `
+  INSERT INTO photos (id, albumId, title,url,) VALUES
+  
+  (1, 1, 'Summer Vibes'),
+  (2, 1, 'Weekend Fun'),
+  
+  (3, 2, 'City Life'),
+  (4, 2, 'Family Moments'),
+  
+  (5, 3, 'Vacation Time'),
+  (6, 3, 'Night Out'),
+  
+  (7, 4, 'Adventure Awaits'),
+  (8, 4, 'Chill Moments'),
+  
+  (9, 5, 'Foodie Diaries'),
+  (10, 5, 'Friends Forever');
+  `;
 
   await conDB.promise().query(insertUsers);
   console.log("Initial users inserted");
@@ -101,6 +137,12 @@ async function initializeDB() {
   console.log("Initial donations inserted");
 
   await conDB.promise().query(insertComments);
+  console.log("Initial apartments inserted");
+
+  await conDB.promise().query(insertTodo);
+  console.log("Initial apartments inserted");
+
+  await conDB.promise().query(insertAlbums);
   console.log("Initial apartments inserted");
 }
 
