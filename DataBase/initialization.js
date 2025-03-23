@@ -114,20 +114,7 @@ async function initializeDB() {
   const insertPhotos = `
   INSERT INTO photos (id, albumId, title,url,) VALUES
   
-  (1, 1, 'Summer Vibes'),
-  (2, 1, 'Weekend Fun'),
-  
-  (3, 2, 'City Life'),
-  (4, 2, 'Family Moments'),
-  
-  (5, 3, 'Vacation Time'),
-  (6, 3, 'Night Out'),
-  
-  (7, 4, 'Adventure Awaits'),
-  (8, 4, 'Chill Moments'),
-  
-  (9, 5, 'Foodie Diaries'),
-  (10, 5, 'Friends Forever');
+ 
   `;
 
   await conDB.promise().query(insertUsers);
