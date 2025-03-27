@@ -7,11 +7,11 @@ async function initializeDB() {
   // הכנסת נתונים התחלתיים לטבלת users
   const insertUsers = `
   INSERT INTO users (id, name, email) VALUES
-  (1, 'Leanne Graham', 'Sincere@april.biz'),
-  (2, 'Ervin Howell', 'Shanna@melissa.tv'),
-  (3, 'Clementine Bauch', 'Nathan@yesenia.net'),
-  (4, 'Patricia Lebsack', 'Julianne.OConner@kory.org'),
-  (5, 'Chelsey Dietrich', 'Lucio_Hettinger@annie.ca')
+  ('Leanne Graham', 'Sincere@april.biz'),
+  ('Ervin Howell', 'Shanna@melissa.tv'),
+  ('Clementine Bauch', 'Nathan@yesenia.net'),
+  ('Patricia Lebsack', 'Julianne.OConner@kory.org'),
+  ('Chelsey Dietrich', 'Lucio_Hettinger@annie.ca')
    `;
 
 
@@ -112,9 +112,47 @@ async function initializeDB() {
   `;
   
   const insertPhotos = `
-  INSERT INTO photos (id, albumId, title,url,) VALUES
+  INSERT INTO photos (id, albumId, title, url) VALUES
   
- 
+  (1, 1, 'Sunset at the Beach', 'https://example.com/photo1.jpg'),
+  (2, 1, 'Chilling by the Water', 'https://example.com/photo2.jpg'),
+  (3, 1, 'Palm Trees Vibe', 'https://example.com/photo3.jpg'),
+  
+  (4, 2, 'Park Picnic', 'https://example.com/photo4.jpg'),
+  (5, 2, 'Coffee and Friends', 'https://example.com/photo5.jpg'),
+  (6, 2, 'Street Market Finds', 'https://example.com/photo6.jpg'),
+  
+  (7, 3, 'Skyscraper Views', 'https://example.com/photo7.jpg'),
+  (8, 3, 'Rooftop Hangout', 'https://example.com/photo8.jpg'),
+  (9, 3, 'Cafe Moments', 'https://example.com/photo9.jpg'),
+  
+  (10, 4, 'Hiking in the Mountains', 'https://example.com/photo10.jpg'),
+  (11, 4, 'Sunrise Over the Valley', 'https://example.com/photo11.jpg'),
+  (12, 4, 'Exploring Nature', 'https://example.com/photo12.jpg'),
+  
+  (13, 5, 'Delicious Brunch', 'https://example.com/photo13.jpg'),
+  (14, 5, 'Sushi Night', 'https://example.com/photo14.jpg'),
+  (15, 5, 'Foodie Adventure', 'https://example.com/photo15.jpg'),
+  
+  (16, 6, 'Selfie Time', 'https://example.com/photo16.jpg'),
+  (17, 6, 'Fun at the Club', 'https://example.com/photo17.jpg'),
+  (18, 6, 'Party Moments', 'https://example.com/photo18.jpg'),
+  
+  (19, 7, 'Mountain Adventure', 'https://example.com/photo19.jpg'),
+  (20, 7, 'Road Trip', 'https://example.com/photo20.jpg'),
+  (21, 7, 'Nature Trails', 'https://example.com/photo21.jpg'),
+  
+  (22, 8, 'Lazy Afternoon', 'https://example.com/photo22.jpg'),
+  (23, 8, 'Cozy Coffee Shop', 'https://example.com/photo23.jpg'),
+  (24, 8, 'Relaxing on the Couch', 'https://example.com/photo24.jpg'),
+  
+  (25, 9, 'Tasty Treats', 'https://example.com/photo25.jpg'),
+  (26, 9, 'Baking Fun', 'https://example.com/photo26.jpg'),
+  (27, 9, 'Sweet Creations', 'https://example.com/photo27.jpg'),
+  
+  (28, 10, 'Friends at the Beach', 'https://example.com/photo28.jpg'),
+  (29, 10, 'Laughing Moments', 'https://example.com/photo29.jpg'),
+  (30, 10, 'Fun with Pals', 'https://example.com/photo30.jpg');
   `;
 
   await conDB.promise().query(insertUsers);
@@ -131,7 +169,11 @@ async function initializeDB() {
 
   await conDB.promise().query(insertAlbums);
   console.log("Initial apartments inserted");
+
+  await conDB.promise().query(insertPhotos);
+  console.log("Initial apartments inserted");
 }
+
 
 initializeDB();
 module.exports = initializeDB;
