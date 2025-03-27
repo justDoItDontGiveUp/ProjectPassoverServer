@@ -4,9 +4,14 @@ async function getAll(table) {
     const [rows] = await db.query("SELECT * FROM ??", [table]);
     return rows;
   }
-  async function getobjectById(table,id) {
+  async function getObjectById(table,id) {
     const [rows] = await db.query("SELECT * FROM ?? WHERE id = ?", [table,id]);
     return rows[0];
+  }
+
+  async function getObjectsByField(table, column, value) {
+    const [rows] = await db.query(`SELECT * FROM ?? WHERE ?? = ?`, [table, column, value]);
+    return rows;
   }
 
   async function createObject(table, data) {
@@ -19,12 +24,18 @@ async function getAll(table) {
     return { id, ...data };
   }
   
+  async function deleteObject(table, id) {
+    await db.query("DELETE FROM ?? WHERE id = ?", [table, id]);
+  }
+  
 
 module.exports = {
   getAll,
-  getobjectById,
+  getObjectById,
   createObject,
   updateObject,
   updateObject,
+  getObjectsByField,
+  deleteObject
  };
   

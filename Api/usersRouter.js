@@ -1,93 +1,74 @@
-const { get } = require("../API/apartments.routes.js");
-const db = require("../DataBase/db.js");
+const express = require("express");
+const router = express.Router();
+const dbServices = require("../Services/db.services.js");  
 
-
-async function getAllUsers() {
-  const [rows] = await db.query("SELECT * FROM users");
-  return rows;
-}
-
-async function getUserById(id) {
-  const [rows] = await db.query("SELECT * FROM users WHERE user_id = ?", [id]);
-  return rows[0];
-}
-
-async function getUserByApartmentId(apartmentId) {
-  const [rows] = await db.query("SELECT * FROM users WHERE apartment_Id = ?", [
-    apartmentId,
-  ]);
-  return rows;
-}
-
-async function getUserDonations(id) {
-  const [rows] = await db.query("SELECT * FROM donations WHERE user_id = ?", [
-    id,
-  ]);
-  return rows;
-}
-
-async function getUserAmount(id) {
-  const [rows] = await db.query(
-    "SELECT SUM(amount) as amount FROM donations WHERE user_id = ?",
-    [id]
-  );
-  return rows[0];
-}
-
-async function getTopUsers(num) {
-  const [rows] = await db.query(
-    "SELECT user_id, name, apartment_id, SUM(donations.amount) as totalDonations FROM users NATURAL JOIN donations WHERE user_id !=1 GROUP BY user_id, name, apartment_id ORDER BY totalDonations DESC LIMIT ?",
-    [parseInt(num, 10)]
-  );
-  return rows;
-}
-
-async function createUser(user) {
-  const [result] = await db.query("INSERT INTO users SET ?", user);
-  return { id: result.insertId, ...user };
-}
-
-async function uploadUsers(excelUsers) {
-  const users = await transformUsersExcelData(excelUsers);
-  let result = [];
-  for (let user of users) {
-    result.push(await createUser(user));
+// GET all users
+router.get("/users", async (req, res) => {
+  try {
+    const users = await dbServices.getAll("users");
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-  return result;
-}
+});
 
-async function updateUser(id, user) {
-  await db.query("UPDATE users SET ? WHERE user_id = ?", [user, id]);
-  return { id, ...user };
-}
+// GET user by ID
+router.get("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await dbServices.getObjectById("users", id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
-async function transformUsersExcelData(excelData) {
-  const [rows] = await db.query("SELECT * FROM apartments");
-  console.log(rows);
-  
-  return excelData.map((row) => {
-    console.log(row["דירה_מס"]);
-    const apartment = rows.find((apart) => {
-      console.log(apart.apart_name);
-      return row["דירה_מס"] == apart.apart_name;
-    });
-    console.log(apartment);
+// GET users by field (e.g., role, city, etc.)
+router.get("/users/field", async (req, res) => {
+  const { column, value } = req.query;
+  try {
+    const users = await dbServices.getObjectsByField("users", column, value);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
-    return {
-      name: `${row["שם_פרטי"]} ${row["שם_משפחה"]}`, // מאחדים שם פרטי + משפחה
-      apartment_id: apartment ? apartment.apartment_id : null,
-    };
-  });
-}
+// CREATE a new user
+router.post("/users", async (req, res) => {
+  const data = req.body;
+  try {
+    const newUser = await dbServices.createObject("users", data);
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
-module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  getUserByApartmentId,
-  uploadUsers,
-  getTopUsers,
-  getUserDonations,
-  getUserAmount,
-};
+// UPDATE user
+router.put("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  try {
+    const updatedUser = await dbServices.updateObject("users", id, data);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE user
+router.delete("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await dbServices.deleteObject("users", id);
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+module.exports = router;
