@@ -9,8 +9,13 @@ async function getAll(table) {
     return rows[0];
   }
 
-  async function getObjectsByField(table, column, value) {
-    const [rows] = await db.query(`SELECT * FROM ?? WHERE ?? = ?`, [table, column, value]);
+  async function getObjectByUserId(table,UserId) {
+    const [rows] = await db.query("SELECT * FROM ?? WHERE id = ?", [table,UserId]);
+    return rows[0];
+  }
+
+  async function getObjectsByField(table, Field, value) {
+    const [rows] = await db.query(`SELECT * FROM ?? WHERE ?? = ?`, [table, Field, value]);
     return rows;
   }
 
@@ -36,6 +41,9 @@ module.exports = {
   updateObject,
   updateObject,
   getObjectsByField,
-  deleteObject
+  deleteObject,
+  getObjectByUserId
  };
+
+ 
   

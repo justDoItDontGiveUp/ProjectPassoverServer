@@ -1,19 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const dbServices = require("../Services/db.services.js");  
 
 // GET all users
-router.get("/users", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
+    console.log("נכנסתי לפונקציית Get ב Try ");
     const users = await dbServices.getAll("users");
     res.status(200).json(users);
   } catch (error) {
+    console.log("נכנסתי לפונקציית Get ב cetch ");
     res.status(500).json({ error: error.message });
+
   }
 });
 
 // GET user by ID
-router.get("/users/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const user = await dbServices.getObjectById("users", id);
@@ -27,7 +29,7 @@ router.get("/users/:id", async (req, res) => {
 });
 
 // GET users by field (e.g., role, city, etc.)
-router.get("/users/field", async (req, res) => {
+router.get("/field", async (req, res) => {
   const { column, value } = req.query;
   try {
     const users = await dbServices.getObjectsByField("users", column, value);
@@ -38,7 +40,7 @@ router.get("/users/field", async (req, res) => {
 });
 
 // CREATE a new user
-router.post("/users", async (req, res) => {
+router.post("/", async (req, res) => {
   const data = req.body;
   try {
     const newUser = await dbServices.createObject("users", data);
@@ -49,7 +51,7 @@ router.post("/users", async (req, res) => {
 });
 
 // UPDATE user
-router.put("/users/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const data = req.body;
   try {
