@@ -2,11 +2,23 @@ const express = require("express");
 const router = express.Router();
 const dbServices = require("../Services/generyServices.js");
 
+
 // GET comments for a specific post
-router.get("/posts/:postId/comments", async (req, res) => {
+router.get("/", async (req, res) => {
+  try {
+    const comments = await dbServices.getAll( "comments");
+    res.status(200).json(comments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+// GET comments for a specific post
+router.get("/", async (req, res) => {
   const { postId } = req.params;
   try {
-    const comments = await dbServices.getObjectsByField("comments", "postId", postId);
+    const comments = await dbServices.getObjectsByField( "comments","postId", postId);
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ error: error.message });

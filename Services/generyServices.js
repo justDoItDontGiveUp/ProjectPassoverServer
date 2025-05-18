@@ -21,7 +21,9 @@ async function getAll(table) {
 
   async function createObject(table, data) {
     const [result] = await db.query(`INSERT INTO ?? SET ?`, [table, data]);
+    console.log("I entered to createObject");
     return { id: result.insertId, ...data };
+
   }
 
   async function updateObject(table,id, data) {

@@ -5,7 +5,7 @@ const conDB = require("./connectToDB");
 
 function cleanDB() {
   conDB.query(
-    "DROP DATABASE IF EXISTS " + process.env.DB_NAME,
+    "DROP DATABASE IF EXISTS social_db",
     function (err, result) {
       if (err) throw err;
       console.log("Database dropped");

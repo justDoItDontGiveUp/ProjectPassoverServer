@@ -13,13 +13,12 @@ function createTable(query, tableName) {
 
 async function createTables() {
   const tableFiles = [
-    "./sqlTables/albums.sql",
-    "./sqlTables/comments.sql",
-    "./sqlTables/passwords.sql",
-    "./sqlTables/photos.sql",
-    "./sqlTables/posts.sql",
+      "./sqlTables/users.sql",
     "./sqlTables/todos.sql",
-    "./sqlTables/usres.sql"
+      "./sqlTables/posts.sql",
+    "./sqlTables/comments.sql",
+     "./sqlTables/passwords.sql"
+  
   ];
 
   for (const file of tableFiles) {
